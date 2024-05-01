@@ -7,24 +7,38 @@ public class UserManager : IUserManager
         _context = context;
     }
 
-    Token Register(User user)
+    public Token Register(User user)
     {
         if(_context.Users.Any(u => u.Email == user.Email))
         {
             return null;
         }
+        
         user.Id = _context.Users.Count() + 1;
+        Token regToken = user.CreateNewToken(_context.Tokens.Count() + 1);
+
         _context.Users.Add(user);
+        _context.Tokens.Add(regToken);
         _context.SaveChanges();
+        return regToken;
     }
 
-    Token LogIn(string login, string password)
+    public Token LogIn(string login, string password)
     {
-
+        User user = _context.Users.FirstOrDefault(u => u.Email == login && u.Password == password);
+        if(user==null)
+        {
+            return null;
+        }
+        Token newToken = user.CreateNewToken(_context.Tokens.Count() + 1);
+        _context.Tokens.Add(newToken);
+        _context.SaveChanges();
+        return newToken;
     }
 
-    void Logout(string token)
+    public void Logout(string token)
     {
-
+        _context.Tokens.Where(t => t.TokenValue == token).ToList().ForEach(t => _context.Tokens.Remove(t));
+        _context.SaveChanges();
     }
 }

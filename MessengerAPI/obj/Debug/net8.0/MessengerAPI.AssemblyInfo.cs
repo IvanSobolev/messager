@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MessengerAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f7a16653dcab4674926b26e8979b2f951ba12d27")]
 [assembly: System.Reflection.AssemblyProductAttribute("MessengerAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MessengerAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

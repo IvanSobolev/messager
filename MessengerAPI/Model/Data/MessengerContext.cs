@@ -16,17 +16,22 @@ public class MessengerContext : DbContext
         // Определение взаимосвязей между таблицами
         modelBuilder.Entity<User>()
             .HasMany(u => u.Tokens)
-            .WithOne()
-            .HasForeignKey(t => t.Id);
+            .WithOne(t => t.ConnectUser)
+            .HasForeignKey(t => t.UserId);
 
-        modelBuilder.Entity<User>()
-            .HasMany(u => u.ReceivedMessages)
-            .WithOne(m => m.ToUser)
+        modelBuilder.Entity<Message>()
+            .HasOne(m => m.ToUser)
+            .WithMany(u => u.ReceivedMessages)
             .HasForeignKey(m => m.ToId);
 
-        modelBuilder.Entity<User>()
-            .HasMany(u => u.SentMessages)
-            .WithOne(m => m.FromUser)
+        modelBuilder.Entity<Message>()
+            .HasOne(m => m.FromUser)
+            .WithMany(u => u.SentMessages)
             .HasForeignKey(m => m.FromId);
+
+        modelBuilder.Entity<Content>()
+            .HasOne(c => c.message)
+            .WithMany(m => m.Context)
+            .HasForeignKey(c => c.MessageId);
     }
 }
